@@ -2,79 +2,136 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="My HTML Projects Portfolio">
-  <title>My HTML Projects</title>
+  <title>Demo Projects by Nick Lonz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    :root {
+      --primary: #2c3e50;
+      --accent: #3498db;
+      --background: #ecf0f1;
+      --card-bg: #fff;
+      --text: #2c3e50;
+    }
+
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
     }
+
     header {
-      background-color: #4CAF50;
+      background-color: var(--primary);
       color: white;
+      padding: 2rem;
       text-align: center;
-      padding: 20px;
     }
+
     h1 {
-      margin: 0;
+      margin-bottom: 0.3rem;
     }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #bdc3c7;
+    }
+
     main {
-      padding: 20px;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
+
     .project {
-      background-color: white;
-      margin: 10px 0;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background-color: var(--card-bg);
+      border-left: 5px solid var(--accent);
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 8px;
     }
+
     .project h2 {
       margin-top: 0;
+      font-size: 1.5rem;
     }
+
     .project p {
-      font-size: 16px;
+      margin: 0.5rem 0;
     }
+
     .project a {
-      color: #4CAF50;
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 0.8rem;
+      background-color: var(--accent);
+      color: white;
       text-decoration: none;
-      font-weight: bold;
+      border-radius: 4px;
+      transition: background-color 0.2s;
     }
+
+    .project a:hover {
+      background-color: #217dbb;
+    }
+
     footer {
       text-align: center;
-      padding: 10px;
-      background-color: #333;
-      color: white;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #888;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>My HTML Projects</h1>
-    <p>Welcome to my portfolio! Here are some of my HTML projects.</p>
+    <h1>Demo Projects by Nick Lonz</h1>
+    <div class="subtitle">A collection of interactive projects — fun, educational, and free for all to explore</div>
   </header>
 
   <main>
+
     <div class="project">
-      <h2>Project 1: Personal Portfolio</h2>
-      <p>This is a simple portfolio webpage that showcases my work and projects. It uses HTML and CSS to create a clean, modern design.</p>
-      <a href="https://github.com/yourusername/your-repo-name/portfolio.html" target="_blank">View Project</a>
+      <h2>Step Converter</h2>
+      <p>Convert steps (e.g., from a smartwatch) into miles, feet, inches, yards, and furlongs. Includes commas for readability.</p>
+      <a href="step-converter.html" target="_blank">Try the Step Converter</a>
     </div>
 
     <div class="project">
-      <h2>Project 2: Interactive Game</h2>
-      <p>This interactive game was built using HTML and JavaScript. It allows users to play a simple guessing game.</p>
-      <a href="https://github.com/yourusername/your-repo-name/game.html" target="_blank">View Project</a>
+      <h2>Fibonacci Sequence Visualizer</h2>
+      <p>Explore the Fibonacci sequence and learn its real-world applications in mathematics, engineering, and finance.</p>
+      <a href="fibonacci.html" target="_blank">Explore Fibonacci</a>
     </div>
 
-    <!-- Add more projects here -->
+    <div class="project">
+      <h2>Prime Number Generator</h2>
+      <p>Generates all prime numbers up to 1000 and explains how prime testing works, including the square root optimization trick.</p>
+      <a href="prime-generator.html" target="_blank">See Prime Generator</a>
+    </div>
+
+    <div class="project">
+      <h2>5-Minute Writing Timer</h2>
+      <p>A dramatic countdown timer to help you write under pressure. Includes millisecond countdown, word count, and urgency effect.</p>
+      <a href="writing-timer.html" target="_blank">Launch Writing Timer</a>
+    </div>
+
+    <div class="project">
+      <h2>High Noon: Wild West Guess Game</h2>
+      <p>Pick high or low numbers from 1 to 10 in a showdown format. Guess correctly 7 out of 10 times to win!</p>
+      <a href="high-noon.html" target="_blank">Play High Noon</a>
+    </div>
+
+    <div class="project">
+      <h2>Clown Balloon Game</h2>
+      <p>A circus-themed mystery game where you find the three matching colored balloons behind five doors. Includes three chances!</p>
+      <a href="clown-balloon.html" target="_blank">Open the Doors</a>
+    </div>
+
   </main>
 
   <footer>
-    <p>&copy; 2025 Nick Lonz</p>
+    © 2025 Nick Lonz — Made with ❤️ for curious minds everywhere.
   </footer>
 </body>
 </html>
+
