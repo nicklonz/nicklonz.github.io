@@ -1,78 +1,1645 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Nick Lonz - Demo Projects</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f9;
-      margin: 0;
-      padding: 2em;
-      color: #333;
-    }
-    h1 {
-      color: #004488;
-      text-align: center;
-    }
-    .project-list {
-      max-width: 800px;
-      margin: auto;
-    }
-    .project {
-      background: #fff;
-      border-left: 5px solid #004488;
-      margin: 1em 0;
-      padding: 1em;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-    }
-    .project a {
-      color: #004488;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    .project p {
-      margin: 0.3em 0 0 0;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Nick Lonz's Complete Embedded Projects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 2em;
+        }
+        h1, h2 {
+            color: #004488;
+        }
+        section {
+            background: #fff;
+            padding: 1.5em;
+            margin-bottom: 3em;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            border-left: 5px solid #004488;
+        }
+        .project-content {
+            padding: 1em;
+            background: #f0f0f0;
+            margin-top: 1em;
+        }
+    </style>
 </head>
 <body>
-  <h1>Nick Lonz's Demo Projects</h1>
-  <div class="project-list">
+    <h1>Nick Lonz's Complete Embedded Projects</h1>
     
-    <div class="project">
-      <a href="big_top_guess_game.html">🎪 Big Top Guess Game</a>
-      <p>Circus-themed game where you guess which doors hide the matching balloons.</p>
-    </div>
+        <section>
+            <h2>Big Top Guess Game</h2>
+            <style><style>
+    body {
+      background: linear-gradient(to bottom, #ffcc00, #ff6666);
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
 
-    <div class="project">
-      <a href="high_noon_showdown.html">🤠 High Noon Showdown</a>
-      <p>Wild West-themed guessing game: pick high or low—guess 7 out of 10 to win!</p>
-    </div>
+    h1 {
+      font-size: 3em;
+      text-shadow: 2px 2px #cc0000;
+    }
 
-    <div class="project">
-      <a href="five_minute_writer.html">📝 5-Minute Writing Timer</a>
-      <p>Write for 5 minutes with a live countdown and word count tracker. Drama builds as time ticks down!</p>
-    </div>
+    .game-container {
+      background-color: rgba(255, 0, 0, 0.8);
+      border: 5px dashed white;
+      padding: 30px;
+      border-radius: 20px;
+      display: inline-block;
+    }
 
-    <div class="project">
-      <a href="fibonacci_explained.html">🔢 Fibonacci Explorer</a>
-      <p>Learn and visualize the magic of Fibonacci numbers in math, engineering, and finance.</p>
-    </div>
+    input[type="number"] {
+      font-size: 1.5em;
+      padding: 10px;
+      width: 60px;
+      text-align: center;
+      border: 3px solid white;
+      border-radius: 10px;
+    }
 
-    <div class="project">
-      <a href="step_converter.html">👟 Step Converter</a>
-      <p>Convert steps from your smartwatch into miles, feet, furlongs, yards, and inches—complete with commas!</p>
-    </div>
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: #ffffff;
+      color: #cc0000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-weight: bold;
+    }
 
-    <div class="project">
-      <a href="prime_finder.html">🧮 Prime Number Finder</a>
-      <p>Enter a number and generate all prime numbers up to 1,000 with explanations.</p>
-    </div>
+    #result, #probability, #guesses-left {
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+  </style></style>
+            <div class="project-content"><h1>🎪 Big Top Guess!</h1><div class="game-container">
+<p>Step right up! Guess the number from <strong>1 to 10</strong>!</p>
+<p>You have <strong>3 chances</strong> to win the prize! 🎁</p>
+<input id="userGuess" max="10" min="1" type="number"/>
+<br/>
+<button onclick="makeGuess()">Take a Guess!</button>
+<div id="result"></div>
+<div id="probability"></div>
+<div id="guesses-left"></div>
+</div><script>
+    const answer = Math.floor(Math.random() * 10) + 1;
+    let attempts = 0;
+    let maxAttempts = 3;
+    let guessedNumbers = [];
 
-  </div>
-</body>
+    function makeGuess() {
+      const userGuess = parseInt(document.getElementById('userGuess').value);
+      const result = document.getElementById('result');
+      const probability = document.getElementById('probability');
+      const guessesLeft = document.getElementById('guesses-left');
+
+      if (userGuess < 1 || userGuess > 10 || isNaN(userGuess)) {
+        result.innerText = "🎈 Pick a number from 1 to 10!";
+        return;
+      }
+
+      if (guessedNumbers.includes(userGuess)) {
+        result.innerText = "🎪 You already tried that number!";
+        return;
+      }
+
+      guessedNumbers.push(userGuess);
+      attempts++;
+
+      const remainingOptions = 10 - guessedNumbers.length;
+      const currentProbability = (1 / remainingOptions * 100).toFixed(2);
+
+      if (userGuess === answer) {
+        result.innerText = "🎉 Hooray! You guessed the magic number!";
+        probability.innerText = "";
+        guessesLeft.innerText = "";
+      } else if (attempts < maxAttempts) {
+        result.innerText = `🎠 Nope! Try again.`;
+        probability.innerText = `🎯 New Probability: 1 in ${remainingOptions} (${currentProbability}%)`;
+        guessesLeft.innerText = `🎟️ Guesses Left: ${maxAttempts - attempts}`;
+      } else {
+        result.innerText = `😢 No more chances! The number was ${answer}.`;
+        probability.innerText = "";
+        guessesLeft.innerText = "";
+      }
+    }
+  </script></div>
+            <script>
+    const answer = Math.floor(Math.random() * 10) + 1;
+    let attempts = 0;
+    let maxAttempts = 3;
+    let guessedNumbers = [];
+
+    function makeGuess() {
+      const userGuess = parseInt(document.getElementById('userGuess').value);
+      const result = document.getElementById('result');
+      const probability = document.getElementById('probability');
+      const guessesLeft = document.getElementById('guesses-left');
+
+      if (userGuess < 1 || userGuess > 10 || isNaN(userGuess)) {
+        result.innerText = "🎈 Pick a number from 1 to 10!";
+        return;
+      }
+
+      if (guessedNumbers.includes(userGuess)) {
+        result.innerText = "🎪 You already tried that number!";
+        return;
+      }
+
+      guessedNumbers.push(userGuess);
+      attempts++;
+
+      const remainingOptions = 10 - guessedNumbers.length;
+      const currentProbability = (1 / remainingOptions * 100).toFixed(2);
+
+      if (userGuess === answer) {
+        result.innerText = "🎉 Hooray! You guessed the magic number!";
+        probability.innerText = "";
+        guessesLeft.innerText = "";
+      } else if (attempts < maxAttempts) {
+        result.innerText = `🎠 Nope! Try again.`;
+        probability.innerText = `🎯 New Probability: 1 in ${remainingOptions} (${currentProbability}%)`;
+        guessesLeft.innerText = `🎟️ Guesses Left: ${maxAttempts - attempts}`;
+      } else {
+        result.innerText = `😢 No more chances! The number was ${answer}.`;
+        probability.innerText = "";
+        guessesLeft.innerText = "";
+      }
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>High Noon Showdown</h2>
+            <style><style>
+    body {
+      background: #f4e2d8;
+      font-family: 'Courier New', Courier, monospace;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      color: saddlebrown;
+      font-size: 2.5em;
+      text-shadow: 2px 2px #daa520;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: peru;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: white;
+    }
+    button:hover {
+      background-color: goldenrod;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 1.4em;
+      color: darkgreen;
+    }
+    #scoreboard {
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+  </style></style>
+            <div class="project-content"><h1>🤠 High Noon Numbers Showdown!</h1><p>Pick High (6–10) or Low (1–5). Get 7 out of 10 right to win the showdown!</p><button onclick="makeGuess('high')">High</button><button onclick="makeGuess('low')">Low</button><div id="result"></div><div id="scoreboard">
+    Rounds Played: <span id="rounds">0</span><br/>
+    Correct Guesses: <span id="correct">0</span><br/>
+    Status: <span id="status">Keep Guessin', Cowboy!</span>
+</div><script>
+    let rounds = 0;
+    let correct = 0;
+
+    function makeGuess(playerGuess) {
+      if (rounds >= 10) return;
+
+      let number = Math.floor(Math.random() * 10) + 1;
+      let actual = (number <= 5) ? 'low' : 'high';
+
+      let isCorrect = playerGuess === actual;
+      rounds++;
+      if (isCorrect) correct++;
+
+      document.getElementById('result').textContent = 
+        `You guessed ${playerGuess.toUpperCase()}... Number was ${number}. ${isCorrect ? '🎯 Hit!' : '💥 Missed!'}`;
+
+      document.getElementById('rounds').textContent = rounds;
+      document.getElementById('correct').textContent = correct;
+
+      if (rounds === 10) {
+        let win = correct >= 7;
+        document.getElementById('status').textContent = 
+          win ? "🏆 You Win the Showdown, Sheriff!" : "😢 You Lost. Try Again, Partner!";
+      }
+    }
+  </script></div>
+            <script>
+    let rounds = 0;
+    let correct = 0;
+
+    function makeGuess(playerGuess) {
+      if (rounds >= 10) return;
+
+      let number = Math.floor(Math.random() * 10) + 1;
+      let actual = (number <= 5) ? 'low' : 'high';
+
+      let isCorrect = playerGuess === actual;
+      rounds++;
+      if (isCorrect) correct++;
+
+      document.getElementById('result').textContent = 
+        `You guessed ${playerGuess.toUpperCase()}... Number was ${number}. ${isCorrect ? '🎯 Hit!' : '💥 Missed!'}`;
+
+      document.getElementById('rounds').textContent = rounds;
+      document.getElementById('correct').textContent = correct;
+
+      if (rounds === 10) {
+        let win = correct >= 7;
+        document.getElementById('status').textContent = 
+          win ? "🏆 You Win the Showdown, Sheriff!" : "😢 You Lost. Try Again, Partner!";
+      }
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>Clown's Balloon Bonanza</h2>
+            <style><style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: radial-gradient(circle, #fff8dc, #fdd);
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #e60000;
+      margin-bottom: 10px;
+    }
+
+    .doors {
+      display: flex;
+      justify-content: center;
+      margin: 20px;
+    }
+
+    .door {
+      width: 100px;
+      height: 150px;
+      margin: 10px;
+      border: 5px solid #a52a2a;
+      background-color: #ffcc00;
+      cursor: pointer;
+      position: relative;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .balloon {
+      width: 60px;
+      height: 80px;
+      border-radius: 50%;
+      margin: 20px auto 0;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    .guess-panel {
+      margin-top: 30px;
+    }
+
+    .guess-panel input[type="checkbox"] {
+      transform: scale(1.5);
+      margin: 0 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+  </style></style>
+            <div class="project-content"><h1>🎪 Clown's Balloon Bonanza! 🎈</h1><p>Peek behind 3 doors, then guess which 3 hide matching balloons!</p><div class="doors" id="doorContainer">
+<!-- Doors will be generated here -->
+</div><div id="message"></div><div class="guess-panel hidden" id="guessPanel">
+<p>Now guess the 3 doors with matching balloons:</p>
+<label><input type="checkbox" value="0"/> Door 1</label>
+<label><input type="checkbox" value="1"/> Door 2</label>
+<label><input type="checkbox" value="2"/> Door 3</label>
+<label><input type="checkbox" value="3"/> Door 4</label>
+<label><input type="checkbox" value="4"/> Door 5</label>
+<br/>
+<button onclick="submitGuess()">Submit Guess</button>
+</div><script>
+    const balloonColors = ["red", "blue", "green", "yellow", "purple"];
+    let balloonAssignments = [];
+    let peekCount = 0;
+    const maxPeeks = 3;
+
+    function setupGame() {
+      const doorContainer = document.getElementById("doorContainer");
+      doorContainer.innerHTML = '';
+      balloonAssignments = generateBalloons();
+      peekCount = 0;
+      document.getElementById("message").textContent = '';
+      document.getElementById("guessPanel").classList.add("hidden");
+
+      for (let i = 0; i < 5; i++) {
+        const door = document.createElement("div");
+        door.className = "door";
+        door.textContent = `Door ${i + 1}`;
+        door.dataset.index = i;
+        door.onclick = () => peekDoor(i);
+        doorContainer.appendChild(door);
+      }
+    }
+
+    function generateBalloons() {
+      // Randomly pick a color to be the triplet
+      const matchingColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+      const otherColors = balloonColors.filter(c => c !== matchingColor);
+      const balloonArray = new Array(5);
+
+      // Randomly assign 3 doors to matchingColor
+      const indices = [0, 1, 2, 3, 4].sort(() => 0.5 - Math.random()).slice(0, 3);
+      indices.forEach(i => balloonArray[i] = matchingColor);
+
+      // Assign remaining 2 to random different colors
+      for (let i = 0; i < 5; i++) {
+        if (!balloonArray[i]) {
+          balloonArray[i] = otherColors[Math.floor(Math.random() * otherColors.length)];
+        }
+      }
+
+      return balloonArray;
+    }
+
+    function peekDoor(index) {
+      if (peekCount >= maxPeeks) return;
+
+      const door = document.querySelectorAll('.door')[index];
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.backgroundColor = balloonAssignments[index];
+      door.appendChild(balloon);
+
+      peekCount++;
+      if (peekCount === maxPeeks) {
+        document.getElementById("message").textContent = "Now guess the 3 matching-color doors!";
+        document.getElementById("guessPanel").classList.remove("hidden");
+      }
+
+      // Hide balloon again after short delay
+      setTimeout(() => {
+        if (door.contains(balloon)) {
+          door.removeChild(balloon);
+        }
+      }, 1000);
+    }
+
+    function submitGuess() {
+      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => parseInt(cb.value));
+      if (checked.length !== 3) {
+        alert("Please select exactly 3 doors.");
+        return;
+      }
+
+      const colors = checked.map(i => balloonAssignments[i]);
+      const firstColor = colors[0];
+      const isCorrect = colors.every(color => color === firstColor);
+
+      const msg = isCorrect ? "🎉 Correct! You're a balloon-guessing champ! 🎈" : "😢 Oops! Not quite. Try again!";
+      document.getElementById("message").textContent = msg;
+      document.getElementById("guessPanel").classList.add("hidden");
+
+      setTimeout(setupGame, 3000);
+    }
+
+    // Start the game
+    setupGame();
+  </script></div>
+            <script>
+    const balloonColors = ["red", "blue", "green", "yellow", "purple"];
+    let balloonAssignments = [];
+    let peekCount = 0;
+    const maxPeeks = 3;
+
+    function setupGame() {
+      const doorContainer = document.getElementById("doorContainer");
+      doorContainer.innerHTML = '';
+      balloonAssignments = generateBalloons();
+      peekCount = 0;
+      document.getElementById("message").textContent = '';
+      document.getElementById("guessPanel").classList.add("hidden");
+
+      for (let i = 0; i < 5; i++) {
+        const door = document.createElement("div");
+        door.className = "door";
+        door.textContent = `Door ${i + 1}`;
+        door.dataset.index = i;
+        door.onclick = () => peekDoor(i);
+        doorContainer.appendChild(door);
+      }
+    }
+
+    function generateBalloons() {
+      // Randomly pick a color to be the triplet
+      const matchingColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+      const otherColors = balloonColors.filter(c => c !== matchingColor);
+      const balloonArray = new Array(5);
+
+      // Randomly assign 3 doors to matchingColor
+      const indices = [0, 1, 2, 3, 4].sort(() => 0.5 - Math.random()).slice(0, 3);
+      indices.forEach(i => balloonArray[i] = matchingColor);
+
+      // Assign remaining 2 to random different colors
+      for (let i = 0; i < 5; i++) {
+        if (!balloonArray[i]) {
+          balloonArray[i] = otherColors[Math.floor(Math.random() * otherColors.length)];
+        }
+      }
+
+      return balloonArray;
+    }
+
+    function peekDoor(index) {
+      if (peekCount >= maxPeeks) return;
+
+      const door = document.querySelectorAll('.door')[index];
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.backgroundColor = balloonAssignments[index];
+      door.appendChild(balloon);
+
+      peekCount++;
+      if (peekCount === maxPeeks) {
+        document.getElementById("message").textContent = "Now guess the 3 matching-color doors!";
+        document.getElementById("guessPanel").classList.remove("hidden");
+      }
+
+      // Hide balloon again after short delay
+      setTimeout(() => {
+        if (door.contains(balloon)) {
+          door.removeChild(balloon);
+        }
+      }, 1000);
+    }
+
+    function submitGuess() {
+      const checked = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => parseInt(cb.value));
+      if (checked.length !== 3) {
+        alert("Please select exactly 3 doors.");
+        return;
+      }
+
+      const colors = checked.map(i => balloonAssignments[i]);
+      const firstColor = colors[0];
+      const isCorrect = colors.every(color => color === firstColor);
+
+      const msg = isCorrect ? "🎉 Correct! You're a balloon-guessing champ! 🎈" : "😢 Oops! Not quite. Try again!";
+      document.getElementById("message").textContent = msg;
+      document.getElementById("guessPanel").classList.add("hidden");
+
+      setTimeout(setupGame, 3000);
+    }
+
+    // Start the game
+    setupGame();
+  </script>
+        </section>
+        
+        <section>
+            <h2>Five-Minute Frenzy</h2>
+            <style><style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdf6e3;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    #timer {
+      font-size: 3em;
+      font-weight: bold;
+      margin-bottom: 20px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      background-color: #ecf0f1;
+      width: 260px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    #warning {
+      font-size: 1.2em;
+      color: #c0392b;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    textarea {
+      width: 90%;
+      max-width: 800px;
+      height: 300px;
+      padding: 15px;
+      font-size: 1em;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      resize: none;
+      background: #fffaf0;
+    }
+
+    #wordCount {
+      margin-top: 10px;
+      font-size: 1.1em;
+      color: #2980b9;
+    }
+
+    .highlight {
+      background-color: #ffeaa7;
+      padding: 5px 10px;
+      border-radius: 5px;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { background-color: #ffeaa7; }
+      50% { background-color: #fab1a0; }
+      100% { background-color: #ffeaa7; }
+    }
+  </style></style>
+            <div class="project-content"><h1>📝 Five-Minute Frenzy</h1><div id="timer">300.000</div><div id="warning">⚠️ <span class="highlight">Only one minute left! Push through!</span></div><textarea id="writingBox" placeholder="Start typing..."></textarea><div id="wordCount">Word count: 0</div><script>
+    const timerDisplay = document.getElementById('timer');
+    const writingBox = document.getElementById('writingBox');
+    const wordCountDisplay = document.getElementById('wordCount');
+    const warning = document.getElementById('warning');
+
+    let timeLeft = 300000; // 300 seconds in milliseconds
+
+    const interval = setInterval(() => {
+      timeLeft -= 1;
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerDisplay.textContent = "0.000";
+        writingBox.disabled = true;
+        warning.innerHTML = "⏰ Time's up!";
+        warning.style.display = 'block';
+        return;
+      }
+
+      const secondsLeft = (timeLeft / 1000).toFixed(3);
+      timerDisplay.textContent = secondsLeft;
+
+      if (timeLeft <= 60000 && !warning.classList.contains('shown')) {
+        warning.style.display = 'block';
+        warning.classList.add('shown');
+      }
+    }, 1); // updates every 1 ms
+
+    writingBox.addEventListener('input', () => {
+      const words = writingBox.value.trim().split(/\s+/).filter(Boolean);
+      wordCountDisplay.textContent = `Word count: ${words.length}`;
+    });
+  </script></div>
+            <script>
+    const timerDisplay = document.getElementById('timer');
+    const writingBox = document.getElementById('writingBox');
+    const wordCountDisplay = document.getElementById('wordCount');
+    const warning = document.getElementById('warning');
+
+    let timeLeft = 300000; // 300 seconds in milliseconds
+
+    const interval = setInterval(() => {
+      timeLeft -= 1;
+
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerDisplay.textContent = "0.000";
+        writingBox.disabled = true;
+        warning.innerHTML = "⏰ Time's up!";
+        warning.style.display = 'block';
+        return;
+      }
+
+      const secondsLeft = (timeLeft / 1000).toFixed(3);
+      timerDisplay.textContent = secondsLeft;
+
+      if (timeLeft <= 60000 && !warning.classList.contains('shown')) {
+        warning.style.display = 'block';
+        warning.classList.add('shown');
+      }
+    }, 1); // updates every 1 ms
+
+    writingBox.addEventListener('input', () => {
+      const words = writingBox.value.trim().split(/\s+/).filter(Boolean);
+      wordCountDisplay.textContent = `Word count: ${words.length}`;
+    });
+  </script>
+        </section>
+        
+        <section>
+            <h2>Duo Ratio Calculator</h2>
+            <style><style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    input {
+      margin: 10px;
+      padding: 10px;
+      width: 100px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+  </style></style>
+            <div class="project-content"><h1>⚖️ Duo Ratio Calculator ⚖️</h1><p>Enter two numbers to find their exclusive <strong>Duo Ratio</strong> (Product ÷ Sum)</p><input id="num1" placeholder="First Number" type="number"/><input id="num2" placeholder="Second Number" type="number"/><br/><button onclick="calculateDuoRatio()">Calculate</button><div class="result" id="output"></div><script>
+    function calculateDuoRatio() {
+      const num1 = parseFloat(document.getElementById("num1").value);
+      const num2 = parseFloat(document.getElementById("num2").value);
+
+      if (isNaN(num1) || isNaN(num2) || (num1 + num2) === 0) {
+        document.getElementById("output").innerHTML = "🚫 Please enter valid numbers. Sum cannot be zero.";
+        return;
+      }
+
+      const sum = num1 + num2;
+      const product = num1 * num2;
+      const ratio = (product / sum).toFixed(2);
+
+      document.getElementById("output").innerHTML =
+        `✨ Sum: ${sum} <br>
+         ✨ Product: ${product} <br>
+         🧮 <strong>Duo Ratio:</strong> ${ratio}`;
+    }
+  </script></div>
+            <script>
+    function calculateDuoRatio() {
+      const num1 = parseFloat(document.getElementById("num1").value);
+      const num2 = parseFloat(document.getElementById("num2").value);
+
+      if (isNaN(num1) || isNaN(num2) || (num1 + num2) === 0) {
+        document.getElementById("output").innerHTML = "🚫 Please enter valid numbers. Sum cannot be zero.";
+        return;
+      }
+
+      const sum = num1 + num2;
+      const product = num1 * num2;
+      const ratio = (product / sum).toFixed(2);
+
+      document.getElementById("output").innerHTML =
+        `✨ Sum: ${sum} <br>
+         ✨ Product: ${product} <br>
+         🧮 <strong>Duo Ratio:</strong> ${ratio}`;
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>FiboPhoria</h2>
+            <style><style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #fceabb, #f8b500);
+      color: #333;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 0;
+    }
+    .subtitle {
+      font-style: italic;
+      color: #555;
+      margin-bottom: 30px;
+    }
+    button {
+      background-color: #ffd700;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      border-radius: 8px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+    #fibDisplay {
+      font-size: 1.5em;
+      max-width: 600px;
+      margin: 0 auto 20px;
+      background: #fff6d1;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+    }
+    .section {
+      text-align: left;
+      max-width: 700px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    canvas {
+      display: block;
+      margin: 30px auto;
+      background: #fff8dc;
+      border-radius: 8px;
+    }
+  </style></style>
+            <div class="project-content"><h1>FiboPhoria</h1><div class="subtitle">The Golden Code of Nature, Math &amp; Money</div><button onclick="generateFibonacci()">Generate Next Fibonacci Number</button><div id="fibDisplay">Fibonacci Sequence: 0, 1</div><canvas height="400" id="spiralCanvas" width="400"></canvas><div class="section">
+<h2>📐 What Are Fibonacci Numbers?</h2>
+<p>The Fibonacci sequence starts with 0 and 1. Each number after is the sum of the two before it. So it goes: 0, 1, 1, 2, 3, 5, 8, 13, 21...</p>
+</div><div class="section">
+<h2>🔬 Real-World Applications</h2>
+<ul>
+<li><strong>Mathematics:</strong> Fibonacci numbers appear in combinatorics and recursive algorithms.</li>
+<li><strong>Engineering:</strong> The spiral pattern occurs in turbine design and signal processing.</li>
+<li><strong>Finance:</strong> Fibonacci retracement is used in technical analysis of stock trends.</li>
+<li><strong>Nature:</strong> Found in pinecones, sunflower seeds, and the branching of trees.</li>
+</ul>
+</div><script>
+  let fib = [0, 1];
+
+  function generateFibonacci() {
+    const next = fib[fib.length - 1] + fib[fib.length - 2];
+    fib.push(next);
+    document.getElementById("fibDisplay").innerText = "Fibonacci Sequence: " + fib.join(", ");
+    drawSpiral();
+  }
+
+  function drawSpiral() {
+    const canvas = document.getElementById("spiralCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let x = 200;
+    let y = 200;
+    let angle = 0;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    for (let i = 0; i < fib.length && i < 12; i++) {
+      let radius = fib[i] * 4;
+      angle += Math.PI / 2;
+      x += radius * Math.cos(angle);
+      y += radius * Math.sin(angle);
+      ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = "#e89c00";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  drawSpiral();
+</script></div>
+            <script>
+  let fib = [0, 1];
+
+  function generateFibonacci() {
+    const next = fib[fib.length - 1] + fib[fib.length - 2];
+    fib.push(next);
+    document.getElementById("fibDisplay").innerText = "Fibonacci Sequence: " + fib.join(", ");
+    drawSpiral();
+  }
+
+  function drawSpiral() {
+    const canvas = document.getElementById("spiralCanvas");
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let x = 200;
+    let y = 200;
+    let angle = 0;
+
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    for (let i = 0; i < fib.length && i < 12; i++) {
+      let radius = fib[i] * 4;
+      angle += Math.PI / 2;
+      x += radius * Math.cos(angle);
+      y += radius * Math.sin(angle);
+      ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = "#e89c00";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+  }
+
+  drawSpiral();
+</script>
+        </section>
+        
+
+        <section>
+            <h2>Picnic Pick-Off!</h2>
+            <style><style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background: #fdf6e3;
+      text-align: center;
+      padding: 40px;
+      background-image: url('https://www.transparenttextures.com/patterns/picnic.png');
+    }
+    h1 {
+      color: #d35400;
+      font-size: 3em;
+    }
+    .game-area {
+      margin-top: 30px;
+    }
+    button {
+      font-size: 1.5em;
+      padding: 15px 30px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: #ffcc66;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #ffa94d;
+    }
+    .scoreboard {
+      font-size: 1.2em;
+      margin-top: 20px;
+    }
+    .turn {
+      font-weight: bold;
+      color: #2980b9;
+    }
+    .result {
+      font-size: 1.3em;
+      margin-top: 20px;
+      color: #27ae60;
+    }
+  </style></style>
+            <div class="project-content"><h1>🌞 Picnic Pick-Off! 🌭🍔</h1><div class="game-area">
+<p class="turn" id="turn">Player 1's Turn</p>
+<button onclick="makeGuess('hamburger')">🍔 Hamburger</button>
+<button onclick="makeGuess('hotdog')">🌭 Hot Dog</button>
+<p class="result" id="result"></p>
+<div class="scoreboard">
+<p>Player 1 Score: <span id="score1">0</span></p>
+<p>Player 2 Score: <span id="score2">0</span></p>
+</div>
+</div><script>
+    let currentPlayer = 1;
+    let scores = [0, 0];
+
+    function makeGuess(choice) {
+      const systemChoice = Math.random() < 0.5 ? 'hamburger' : 'hotdog';
+      const resultText = document.getElementById('result');
+
+      if (choice === systemChoice) {
+        scores[currentPlayer - 1]++;
+        resultText.innerText = `Correct! It was a ${systemChoice === 'hamburger' ? '🍔 Hamburger' : '🌭 Hot Dog'}!`;
+      } else {
+        resultText.innerText = `Oops! It was a ${systemChoice === 'hamburger' ? '🍔 Hamburger' : '🌭 Hot Dog'}!`;
+      }
+
+      document.getElementById('score1').innerText = scores[0];
+      document.getElementById('score2').innerText = scores[1];
+
+      if (scores[currentPlayer - 1] === 3) {
+        document.getElementById('turn').innerText = `🎉 Player ${currentPlayer} Wins the Picnic Pick-Off! 🎉`;
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+        return;
+      }
+
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      document.getElementById('turn').innerText = `Player ${currentPlayer}'s Turn`;
+    }
+  </script></div>
+            <script>
+    let currentPlayer = 1;
+    let scores = [0, 0];
+
+    function makeGuess(choice) {
+      const systemChoice = Math.random() < 0.5 ? 'hamburger' : 'hotdog';
+      const resultText = document.getElementById('result');
+
+      if (choice === systemChoice) {
+        scores[currentPlayer - 1]++;
+        resultText.innerText = `Correct! It was a ${systemChoice === 'hamburger' ? '🍔 Hamburger' : '🌭 Hot Dog'}!`;
+      } else {
+        resultText.innerText = `Oops! It was a ${systemChoice === 'hamburger' ? '🍔 Hamburger' : '🌭 Hot Dog'}!`;
+      }
+
+      document.getElementById('score1').innerText = scores[0];
+      document.getElementById('score2').innerText = scores[1];
+
+      if (scores[currentPlayer - 1] === 3) {
+        document.getElementById('turn').innerText = `🎉 Player ${currentPlayer} Wins the Picnic Pick-Off! 🎉`;
+        document.querySelectorAll("button").forEach(btn => btn.disabled = true);
+        return;
+      }
+
+      currentPlayer = currentPlayer === 1 ? 2 : 1;
+      document.getElementById('turn').innerText = `Player ${currentPlayer}'s Turn`;
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>Prime Checker Demo</h2>
+            <style><style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #0ff;
+      font-size: 2.5em;
+    }
+
+    input {
+      font-size: 1.5em;
+      padding: 10px;
+      width: 100px;
+      margin: 10px;
+      text-align: center;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      cursor: pointer;
+    }
+
+    .meter {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .step {
+      width: 40px;
+      height: 40px;
+      border-radius: 5px;
+      line-height: 40px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      transition: 0.3s;
+    }
+
+    .checking {
+      background-color: #ff0;
+      color: #000;
+    }
+
+    .not-divisible {
+      background-color: #0f0;
+      color: #000;
+    }
+
+    .divisible {
+      background-color: red;
+      color: #fff;
+    }
+
+    #result {
+      font-size: 1.8em;
+      margin-top: 30px;
+    }
+  </style></style>
+            <div class="project-content"><h1>🎯 Prime Checker Meter</h1><p>Enter a number and see the math happen visually!</p><input id="numberInput" min="2" placeholder="Enter #" type="number"/><button onclick="startPrimeCheck()">Check Prime</button><div class="meter" id="meter"></div><div id="result"></div><script></script></div>
+            <script></script>
+        </section>
+        
+        <section>
+            <h2>Prime Number Explainer</h2>
+            <style><style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #0ff;
+      font-size: 2.5em;
+    }
+
+    input {
+      font-size: 1.5em;
+      padding: 10px;
+      width: 180px;
+      margin: 10px;
+      text-align: center;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      cursor: pointer;
+    }
+
+    .meter {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .step {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      line-height: 50px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      transition: 0.3s;
+      font-size: 1.2em;
+    }
+
+    .checking {
+      background-color: yellow;
+      color: black;
+    }
+
+    .not-divisible {
+      background-color: #0f0;
+      color: black;
+    }
+
+    .divisible {
+      background-color: red;
+      color: white;
+    }
+
+    #result {
+      font-size: 1.8em;
+      margin-top: 30px;
+    }
+
+    #explanation {
+      max-width: 800px;
+      margin: 20px auto 10px;
+      font-size: 1.2em;
+      color: #0ff;
+      white-space: pre-wrap;
+    }
+  </style></style>
+            <div class="project-content"><h1>🎯 Prime Checker Meter</h1><p>Enter a number and watch how we check if it's prime step by step!</p><input id="numberInput" min="2" placeholder="Enter a number" type="number"/><br/><button onclick="startPrimeCheck()">Check Prime</button><div id="explanation"></div><div class="meter" id="meter"></div><div id="result"></div><script>
+    async function startPrimeCheck() {
+      const numberInput = document.getElementById('numberInput');
+      const meter = document.getElementById('meter');
+      const result = document.getElementById('result');
+      const explanation = document.getElementById('explanation');
+
+      const n = parseInt(numberInput.value);
+      meter.innerHTML = '';
+      result.textContent = '';
+      explanation.textContent = '';
+
+      if (isNaN(n) || n < 2) {
+        result.textContent = '❗ Please enter a number 2 or higher.';
+        return;
+      }
+
+      const sqrt = Math.floor(Math.sqrt(n));
+      explanation.textContent =
+        `💡 To check if ${n} is prime, we only need to test numbers from 2 up to √${n} ≈ ${sqrt}.\n` +
+        `Why? Because if ${n} had a factor greater than ${sqrt}, it would already have a matching smaller factor before that.\n\n` +
+        `So let's test from 2 to ${sqrt}...`;
+
+      let isPrime = true;
+
+      // Build and display the checking meter
+      for (let i = 2; i <= sqrt; i++) {
+        const step = document.createElement('div');
+        step.classList.add('step');
+        step.textContent = i;
+        meter.appendChild(step);
+      }
+
+      const steps = meter.querySelectorAll('.step');
+
+      for (let i = 2; i <= sqrt; i++) {
+        const index = i - 2;
+        const box = steps[index];
+
+        box.classList.add('checking');
+        await new Promise(r => setTimeout(r, 500)); // pause to show animation
+
+        if (n % i === 0) {
+          box.classList.remove('checking');
+          box.classList.add('divisible');
+          result.textContent = `❌ ${n} is NOT a prime number (divisible by ${i}).`;
+          isPrime = false;
+          return;
+        } else {
+          box.classList.remove('checking');
+          box.classList.add('not-divisible');
+        }
+      }
+
+      result.textContent = `✅ ${n} is a PRIME number!`;
+    }
+  </script></div>
+            <script>
+    async function startPrimeCheck() {
+      const numberInput = document.getElementById('numberInput');
+      const meter = document.getElementById('meter');
+      const result = document.getElementById('result');
+      const explanation = document.getElementById('explanation');
+
+      const n = parseInt(numberInput.value);
+      meter.innerHTML = '';
+      result.textContent = '';
+      explanation.textContent = '';
+
+      if (isNaN(n) || n < 2) {
+        result.textContent = '❗ Please enter a number 2 or higher.';
+        return;
+      }
+
+      const sqrt = Math.floor(Math.sqrt(n));
+      explanation.textContent =
+        `💡 To check if ${n} is prime, we only need to test numbers from 2 up to √${n} ≈ ${sqrt}.\n` +
+        `Why? Because if ${n} had a factor greater than ${sqrt}, it would already have a matching smaller factor before that.\n\n` +
+        `So let's test from 2 to ${sqrt}...`;
+
+      let isPrime = true;
+
+      // Build and display the checking meter
+      for (let i = 2; i <= sqrt; i++) {
+        const step = document.createElement('div');
+        step.classList.add('step');
+        step.textContent = i;
+        meter.appendChild(step);
+      }
+
+      const steps = meter.querySelectorAll('.step');
+
+      for (let i = 2; i <= sqrt; i++) {
+        const index = i - 2;
+        const box = steps[index];
+
+        box.classList.add('checking');
+        await new Promise(r => setTimeout(r, 500)); // pause to show animation
+
+        if (n % i === 0) {
+          box.classList.remove('checking');
+          box.classList.add('divisible');
+          result.textContent = `❌ ${n} is NOT a prime number (divisible by ${i}).`;
+          isPrime = false;
+          return;
+        } else {
+          box.classList.remove('checking');
+          box.classList.add('not-divisible');
+        }
+      }
+
+      result.textContent = `✅ ${n} is a PRIME number!`;
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>Prime Check Classic</h2>
+            <style><style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #0ff;
+      font-size: 2.5em;
+    }
+
+    input {
+      font-size: 1.5em;
+      padding: 10px;
+      width: 150px;
+      margin: 10px;
+      text-align: center;
+    }
+
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      cursor: pointer;
+    }
+
+    .meter {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .step {
+      width: 50px;
+      height: 50px;
+      border-radius: 6px;
+      line-height: 50px;
+      background-color: #333;
+      color: #fff;
+      border: 1px solid #555;
+      transition: 0.3s;
+      font-size: 1.2em;
+    }
+
+    .checking {
+      background-color: yellow;
+      color: black;
+    }
+
+    .not-divisible {
+      background-color: #0f0;
+      color: black;
+    }
+
+    .divisible {
+      background-color: red;
+      color: white;
+    }
+
+    #result {
+      font-size: 1.8em;
+      margin-top: 30px;
+    }
+  </style></style>
+            <div class="project-content"><h1>🎯 Prime Checker Meter</h1><p>Enter a number and watch how we check if it's prime step by step!</p><input id="numberInput" min="2" placeholder="Enter a number" type="number"/><br/><button onclick="startPrimeCheck()">Check Prime</button><div class="meter" id="meter"></div><div id="result"></div><script>
+    async function startPrimeCheck() {
+      const numberInput = document.getElementById('numberInput');
+      const meter = document.getElementById('meter');
+      const result = document.getElementById('result');
+
+      const n = parseInt(numberInput.value);
+      meter.innerHTML = '';
+      result.textContent = '';
+
+      if (isNaN(n) || n < 2) {
+        result.textContent = '❗ Please enter a number 2 or higher.';
+        return;
+      }
+
+      const sqrt = Math.floor(Math.sqrt(n));
+      let isPrime = true;
+
+      // Create and display the steps (divisor boxes)
+      for (let i = 2; i <= sqrt; i++) {
+        const div = document.createElement('div');
+        div.classList.add('step');
+        div.textContent = i;
+        meter.appendChild(div);
+      }
+
+      const steps = meter.children;
+
+      for (let i = 2; i <= sqrt; i++) {
+        const index = i - 2;
+        const stepBox = steps[index];
+
+        stepBox.classList.add('checking');
+        await new Promise(res => setTimeout(res, 500)); // Wait 500ms to simulate check
+
+        if (n % i === 0) {
+          stepBox.classList.remove('checking');
+          stepBox.classList.add('divisible');
+          result.textContent = `❌ ${n} is NOT a prime number (divisible by ${i}).`;
+          isPrime = false;
+          return;
+        } else {
+          stepBox.classList.remove('checking');
+          stepBox.classList.add('not-divisible');
+        }
+      }
+
+      if (isPrime) {
+        result.textContent = `✅ ${n} is a PRIME number!`;
+      }
+    }
+  </script></div>
+            <script>
+    async function startPrimeCheck() {
+      const numberInput = document.getElementById('numberInput');
+      const meter = document.getElementById('meter');
+      const result = document.getElementById('result');
+
+      const n = parseInt(numberInput.value);
+      meter.innerHTML = '';
+      result.textContent = '';
+
+      if (isNaN(n) || n < 2) {
+        result.textContent = '❗ Please enter a number 2 or higher.';
+        return;
+      }
+
+      const sqrt = Math.floor(Math.sqrt(n));
+      let isPrime = true;
+
+      // Create and display the steps (divisor boxes)
+      for (let i = 2; i <= sqrt; i++) {
+        const div = document.createElement('div');
+        div.classList.add('step');
+        div.textContent = i;
+        meter.appendChild(div);
+      }
+
+      const steps = meter.children;
+
+      for (let i = 2; i <= sqrt; i++) {
+        const index = i - 2;
+        const stepBox = steps[index];
+
+        stepBox.classList.add('checking');
+        await new Promise(res => setTimeout(res, 500)); // Wait 500ms to simulate check
+
+        if (n % i === 0) {
+          stepBox.classList.remove('checking');
+          stepBox.classList.add('divisible');
+          result.textContent = `❌ ${n} is NOT a prime number (divisible by ${i}).`;
+          isPrime = false;
+          return;
+        } else {
+          stepBox.classList.remove('checking');
+          stepBox.classList.add('not-divisible');
+        }
+      }
+
+      if (isPrime) {
+        result.textContent = `✅ ${n} is a PRIME number!`;
+      }
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>Prime Time Viewer</h2>
+            <style><style>
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: #111;
+      color: #0f0;
+      text-align: center;
+      padding: 30px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #0ff;
+    }
+
+    button {
+      background-color: #0f0;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    #output {
+      max-width: 800px;
+      margin: auto;
+      white-space: pre-wrap;
+      font-size: 1.2em;
+      background-color: #000;
+      border: 1px solid #0f0;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    button:hover {
+      background-color: #0c0;
+    }
+  </style></style>
+            <div class="project-content"><h1>Prime Time!</h1><p>Click the button to see all prime numbers from 1 to 1000.</p><button onclick="generatePrimes()">Show Me the Primes</button><div id="output"></div><script>
+    function isPrime(n) {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    function generatePrimes() {
+      const output = document.getElementById('output');
+      let primes = [];
+      for (let i = 1; i <= 1000; i++) {
+        if (isPrime(i)) {
+          primes.push(i);
+        }
+      }
+      output.textContent = primes.join(', ');
+    }
+  </script></div>
+            <script>
+    function isPrime(n) {
+      if (n < 2) return false;
+      for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    function generatePrimes() {
+      const output = document.getElementById('output');
+      let primes = [];
+      for (let i = 1; i <= 1000; i++) {
+        if (isPrime(i)) {
+          primes.push(i);
+        }
+      }
+      output.textContent = primes.join(', ');
+    }
+  </script>
+        </section>
+        
+        <section>
+            <h2>Step Converter Deluxe</h2>
+            <style><style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #3498db;
+        }
+        .result {
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        .input-box {
+            margin-bottom: 20px;
+        }
+    </style></style>
+            <div class="project-content"><div class="container">
+<h1>Step to Distance Converter</h1>
+<p>Convert your smartwatch step count into various distance units!</p>
+<div class="input-box">
+<label for="steps">Enter steps (e.g., 1000):</label>
+<input id="steps" type="number" value="1000"/>
+</div>
+<button onclick="convertSteps()">Convert</button>
+<div class="result">
+<p><strong>Example Conversion (1000 steps):</strong></p>
+<p id="miles"></p>
+<p id="feet"></p>
+<p id="furlongs"></p>
+<p id="yards"></p>
+<p id="inches"></p>
+</div>
+</div><script>
+        // Function to format numbers with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function convertSteps() {
+            var steps = document.getElementById("steps").value;
+            
+            // Average length of a step in feet (rough estimate, can be adjusted)
+            var stepLengthFeet = 2.5; // this can vary depending on the person
+
+            // Calculations
+            var miles = (steps * stepLengthFeet) / 5280;
+            var feet = steps * stepLengthFeet;
+            var furlongs = miles / 0.125;
+            var yards = feet / 3;
+            var inches = feet * 12;
+
+            // Display results with commas
+            document.getElementById("miles").innerText = `Miles: ${formatNumber(miles.toFixed(2))} miles`;
+            document.getElementById("feet").innerText = `Feet: ${formatNumber(feet.toFixed(2))} feet`;
+            document.getElementById("furlongs").innerText = `Furlongs: ${formatNumber(furlongs.toFixed(2))} furlongs`;
+            document.getElementById("yards").innerText = `Yards: ${formatNumber(yards.toFixed(2))} yards`;
+            document.getElementById("inches").innerText = `Inches: ${formatNumber(inches.toFixed(2))} inches`;
+        }
+
+        // Initialize the display with default value of 1000 steps
+        convertSteps();
+    </script></div>
+            <script>
+        // Function to format numbers with commas
+        function formatNumber(num) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function convertSteps() {
+            var steps = document.getElementById("steps").value;
+            
+            // Average length of a step in feet (rough estimate, can be adjusted)
+            var stepLengthFeet = 2.5; // this can vary depending on the person
+
+            // Calculations
+            var miles = (steps * stepLengthFeet) / 5280;
+            var feet = steps * stepLengthFeet;
+            var furlongs = miles / 0.125;
+            var yards = feet / 3;
+            var inches = feet * 12;
+
+            // Display results with commas
+            document.getElementById("miles").innerText = `Miles: ${formatNumber(miles.toFixed(2))} miles`;
+            document.getElementById("feet").innerText = `Feet: ${formatNumber(feet.toFixed(2))} feet`;
+            document.getElementById("furlongs").innerText = `Furlongs: ${formatNumber(furlongs.toFixed(2))} furlongs`;
+            document.getElementById("yards").innerText = `Yards: ${formatNumber(yards.toFixed(2))} yards`;
+            document.getElementById("inches").innerText = `Inches: ${formatNumber(inches.toFixed(2))} inches`;
+        }
+
+        // Initialize the display with default value of 1000 steps
+        convertSteps();
+    </script>
+        </section>
+        </body>
 </html>
 
 
